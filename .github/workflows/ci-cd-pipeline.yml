@@ -199,14 +199,14 @@ jobs:
                       stage='Production'
                   )
                   print(f'🚀 Modèle {model_name} v{result.version} en production')
-              else:
+             else:
                   print(f'⏳ Modèle {model_name} v{result.version} en staging')
                   print(f'   (Accuracy {accuracy:.2%} < 75%, seuil non atteint)')
            except Exception as e:
            print(f'❌ Erreur inattendue: {e}')
-           print('   Le pipeline continue sans versioning MLflow')
+           print('Le pipeline continue sans versioning MLflow')
            sys.exit(0)  
-            "
+           "
 
   # ÉTAPE 6: DÉPLOIEMENT (STAGING puis PROD)
   deploy-staging:
