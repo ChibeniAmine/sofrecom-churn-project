@@ -75,7 +75,7 @@ jobs:
           assert df.shape[1] == 21, f'Nombre de colonnes incorrect: {df.shape[1]} attendu 21'
           assert df['Churn'].nunique() == 2, 'Target doit être binaire'
           # Vérifier les valeurs manquantes (après conversion)
-          df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], erro ='coerce')
+          df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors ='coerce')
           missing = df['TotalCharges'].isnull().sum()
           assert missing <= 11, f'Trop de valeurs manquantes: {missing}'
 
