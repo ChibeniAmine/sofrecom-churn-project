@@ -169,7 +169,7 @@ jobs:
            import mlflow
            from mlflow.tracking import MlflowClient
            import sys
-           try:
+           
               client = MlflowClient()
               print('🔍 Recherche du meilleur modèle...')
               runs = client.search_runs(
@@ -197,10 +197,7 @@ jobs:
                       version=result.version,
                       stage='Production'
                   )
-           except Exception as e:
-           print(f'❌ Erreur inattendue: {e}')
-           print('Le pipeline continue sans versioning MLflow')
-           sys.exit(0)  "
+            "
 
   # ÉTAPE 6: DÉPLOIEMENT (STAGING puis PROD)
   deploy-staging:
