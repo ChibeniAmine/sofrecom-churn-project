@@ -39,6 +39,44 @@ jobs:
           mkdir -p data
           wget -O data/WA_Fn-UseC_-Telco-Customer-Churn.csv \
           "https://raw.githubusercontent.com/ChibeniAmine/sofrecom-churn-project/main/data/WA_Fn-UseC_-Telco-Customer-Churn.csv"
+          || \
+          python -c "
+          import pandas as pd
+          import numpy as np
+          import os
+          if not os.path.exists('data/WA_Fn-UseC_-Telco-Customer-Churn.csv'):
+           print('📦 Création d'un petit dataset synthétique...')
+           np.random.seed(42)
+           n_samples = 100
+           data = {
+          'gender': np.random.choice(['Male', 'Female'], n_samples),
+          'SeniorCitizen': np.random.choice([0, 1], n_samples),
+          'Partner': np.random.choice(['Yes', 'No'], n_samples),
+          'Dependents': np.random.choice(['Yes', 'No'], n_samples),
+          'tenure': np.random.randint(0, 72, n_samples),
+          'PhoneService': np.random.choice(['Yes', 'No'], n_samples),
+          'MultipleLines': np.random.choice(['Yes', 'No', 'No phone service'], n_samples),
+          'InternetService': np.random.choice(['DSL', 'Fiber optic', 'No'], n_samples),
+          'OnlineSecurity': np.random.choice(['Yes', 'No', 'No internet service'], n_samples),
+          'OnlineBackup': np.random.choice(['Yes', 'No', 'No internet service'], n_samples),
+          'DeviceProtection': np.random.choice(['Yes', 'No', 'No internet service'], n_samples),
+          'TechSupport': np.random.choice(['Yes', 'No', 'No internet service'], n_samples),
+          'StreamingTV': np.random.choice(['Yes', 'No', 'No internet service'], n_samples),
+          'StreamingMovies': np.random.choice(['Yes', 'No', 'No internet service'], n_samples),
+          'Contract': np.random.choice(['Month-to-month', 'One year', 'Two year'], n_samples),
+          'PaperlessBilling': np.random.choice(['Yes', 'No'], n_samples),
+          'PaymentMethod': np.random.choice(['Electronic check', 'Mailed check', 'Bank transfer', 'Credit card'], n_samples),
+          'MonthlyCharges': np.random.uniform(20, 120, n_samples),
+          'TotalCharges': np.random.uniform(20, 8000, n_samples),
+          'Churn': np.random.choice(['Yes', 'No'], n_samples, p=[0.27, 0.73])
+               }
+               
+           df = pd.DataFrame(data)
+           df.to_csv('data/WA_Fn-UseC_-Telco-Customer-Churn.csv', index=False)
+           print('✅ Dataset synthétique créé')
+           " 
+              
+        
 
       - name: Run unit tests
         run: |
