@@ -1,0 +1,47 @@
+# Environnement virtuel
+venv/
+env/
+ENV/
+
+# Fichiers Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Données (trop volumineuses pour Git)
+data/
+*.csv
+*.xlsx
+*.parquet
+
+# Modèles (trop volumineux)
+models/*.pkl
+models/*.ubj
+models/*.json
+!models/.gitkeep
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# Notebooks (sans les sorties)
+.ipynb_checkpoints/
+*.ipynb
+!notebooks/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Fichiers système
+.DS_Store
+Thumbs.db
