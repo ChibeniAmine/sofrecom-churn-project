@@ -163,6 +163,11 @@ jobs:
       - name: Install dependencies
         run: pip install mlflow pandas numpy scikit-learn xgboost
         
+      - name: List available runs
+        run: |
+          echo "📂 Contenu de mlruns/:"
+          ls -la mlruns/ || echo "mlruns/ vide ou inexistant"
+        
       - name: Version model with MLflow
         run: |
           python -c "
