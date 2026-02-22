@@ -36,12 +36,9 @@ jobs:
         # À ajouter dans chaque job (test, data-quality, model-testing)
       - name: Download data
         run: |
-          # Créer le dossier data s'il n'existe pas
           mkdir -p data
           wget -O data/WA_Fn-UseC_-Telco-Customer-Churn.csv \
-          "https://raw.githubusercontent.com/ChibeniAmine/sofrecom-churn-project/main/data-backup/WA_Fn-
-           UseC_-Telco-Customer-Churn.csv" \
-           || echo "⚠️ Fichier non trouvé, création d'un petit dataset de test"
+          "https://raw.githubusercontent.com/ChibeniAmine/sofrecom-churn-project/main/data/WA_Fn-UseC_-Telco-Customer-Churn.csv"
 
       - name: Run unit tests
         run: |
