@@ -15,16 +15,24 @@ Prédire le désabonnement client (churn) pour une entreprise de télécommunica
 - **Target**: Churn (27% de clients désabonnés)
 
 ## 🏗️ Architecture du projet
-├── data/ # Données brutes (ignorées par git)
-├── notebooks/ # EDA et analyses
-├── src/ # Code source modulaire
-│ ├── data_preprocessing.py
-│ ├── train.py # Entraînement avec MLflow
-│ ├── tuning.py # Optimisation hyperparamètres
-│ └── predict.py # Inférence
-├── tests/ # Tests unitaires (pytest)
-├── models/ # Modèles sauvegardés (ignorés)
-└── mlruns/ # Tracking MLflow (ignoré)
+sofrecom-churn-project/
+├── .github/               # Workflows CI/CD
+├── data/                  # Données brutes (gitignoré)
+├── notebooks/             # EDA et expérimentations
+├── src/                   # Code source modulaire
+│   ├── data_preprocessing.py
+│   ├── train.py
+│   ├── tuning.py
+│   └── predict.py
+├── tests/                 # Tests unitaires
+│   ├── test_preprocessing.py
+│   └── test_model.py      #
+├── models/                # Modèles sauvegardés (gitignoré)
+├── mlruns/                # Tracking MLflow (gitignoré)
+├── .gitignore
+├── README.md
+├── requirements.txt
+└── setup.py               # Pour packaging
 
 
 ## 🚀 Installation
