@@ -162,42 +162,57 @@ jobs:
 
       - name: Install dependencies
         run: pip install mlflow pandas numpy scikit-learn xgboost
-
+        
       - name: Version model with MLflow
         run: |
-           python -c "
-           import mlflow
-           from mlflow.tracking import MlflowClient
-           import sys
-           
+          python -c "
+          import mlflow
+          from mlflow.tracking import MlflowClient
+          import sys
+          try:
               client = MlflowClient()
-              print('🔍 Recherche du meilleur modèle...')
+              # Récupérer le meilleur run
               runs = client.search_runs(
-              experiment_ids=['0'],
-              order_by=['metrics.accuracy DESC'],
-              max_results=1 
-              )   
-              if not runs:
+                  experiment_ids=['0'],
+                  order_by=['metrics.accuracy DESC'],
+                  max_results=1
+             )
+             if runs:
+                 best_run = runs[0]
+                 run_id = best_run.info.run_id
+                 accuracy = best_run.data.metrics.get('accuracy', 0)
+                 print(f'🏆 Meilleur run trouvé: {run_id}')
+                 print(f'📊 Accuracy: {accuracy:.4f}')
+            
+                 model_uri = f'runs:/{run_id}/model'
+            
+                 # Enregistrer le modèle
+                 model_name = 'telco-churn-predictor'
+                 result = mlflow.register_model(model_uri, model_name)
+            
+                 print(f'📦 Modèle enregistré: {model_name} v{result.version}')
+            
+                 # Passer en production si bonne performance
+                 if accuracy > 0.75:
+                     client.transition_model_version_stage(
+                          name=model_name,
+                          version=result.version,
+                          stage='Production'
+                      )
+                      print(f'✅ Modèle {model_name} v{result.version} en production')
+                  else:
+                      print(f'⚠️ Modèle {model_name} v{result.version} en staging (accuracy < 75%)')
+              else:
                   print('⚠️ Aucun run trouvé dans MLflow')
-                  print('   Les étapes suivantes continueront sans versioning')
-                  sys.exit(0) 
-              best_run = runs[0]
-              run_id = best_run.info.run_id
-              accuracy = best_run.data.metrics.get('accuracy', 0)
-              print(f'🏆 Meilleur run: {run_id}')
-              print(f'📊 Accuracy: {accuracy:.4f}')
-              model_uri = f'runs:/{run_id}/model'
-              model_name = 'telco-churn-predictor'
-              print(f'📦 Enregistrement du modèle...')
-              result = mlflow.register_model(model_uri, model_name)
-              print(f'✅ Modèle enregistré: {model_name} v{result.version}')
-              if accuracy > 0.75:
-                  client.transition_model_version_stage(
-                      name=model_name,
-                      version=result.version,
-                      stage='Production'
-                  )
-            "
+                  sys.exit(0)  # Sortie propre sans erreur
+            
+          except Exception as e:
+              print(f'❌ Erreur: {e}')
+              sys.exit(1)
+          "  
+
+    
+    
 
   # ÉTAPE 6: DÉPLOIEMENT (STAGING puis PROD)
   deploy-staging:
