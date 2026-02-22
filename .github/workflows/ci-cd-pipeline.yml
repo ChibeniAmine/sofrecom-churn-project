@@ -176,25 +176,25 @@ jobs:
                   experiment_ids=['0'],
                   order_by=['metrics.accuracy DESC'],
                   max_results=1
-             )
-             if runs:
-                 best_run = runs[0]
-                 run_id = best_run.info.run_id
-                 accuracy = best_run.data.metrics.get('accuracy', 0)
-                 print(f'🏆 Meilleur run trouvé: {run_id}')
-                 print(f'📊 Accuracy: {accuracy:.4f}')
+              )
+              if runs:
+                  best_run = runs[0]
+                  run_id = best_run.info.run_id
+                  accuracy = best_run.data.metrics.get('accuracy', 0)
+                  print(f'🏆 Meilleur run trouvé: {run_id}')
+                  print(f'📊 Accuracy: {accuracy:.4f}')
             
-                 model_uri = f'runs:/{run_id}/model'
+                  model_uri = f'runs:/{run_id}/model'
             
-                 # Enregistrer le modèle
-                 model_name = 'telco-churn-predictor'
-                 result = mlflow.register_model(model_uri, model_name)
+                  # Enregistrer le modèle
+                  model_name = 'telco-churn-predictor'
+                  result = mlflow.register_model(model_uri, model_name)
             
-                 print(f'📦 Modèle enregistré: {model_name} v{result.version}')
+                  print(f'📦 Modèle enregistré: {model_name} v{result.version}')
             
-                 # Passer en production si bonne performance
-                 if accuracy > 0.75:
-                     client.transition_model_version_stage(
+                  # Passer en production si bonne performance
+                  if accuracy > 0.75:
+                      client.transition_model_version_stage(
                           name=model_name,
                           version=result.version,
                           stage='Production'
