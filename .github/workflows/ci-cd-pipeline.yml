@@ -36,10 +36,6 @@ jobs:
         # À ajouter dans chaque job (test, data-quality, model-testing)
       - name: Download data
         run: |
-          mkdir -p data
-          wget -O data/WA_Fn-UseC_-Telco-Customer-Churn.csv \
-          "https://raw.githubusercontent.com/ChibeniAmine/sofrecom-churn-project/main/data/WA_Fn-UseC_-Telco-Customer-Churn.csv"
-          || \
           python -c "
           import pandas as pd
           import numpy as np
