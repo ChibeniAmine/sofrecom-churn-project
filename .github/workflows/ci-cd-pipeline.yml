@@ -190,9 +190,9 @@ jobs:
             		version=result.version,
             		stage='Production'
             		)
-           	print(f'✅ Modèle {model_name} v{result.version} en production')
+                        print(f'✅ Modèle {model_name} v{result.version} en production')
           else:
-          	print(f'⚠️ Modèle {model_name} v{result.version} en staging')
+               print(f'⚠️ Modèle {model_name} v{result.version} en staging')
           "
 
   # ÉTAPE 6: DÉPLOIEMENT (STAGING puis PROD)
