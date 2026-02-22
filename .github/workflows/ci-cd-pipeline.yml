@@ -199,7 +199,7 @@ jobs:
                       stage='Production'
                   )
                   print(f'🚀 Modèle {model_name} v{result.version} en production')
-             else:
+             
                   print(f'⏳ Modèle {model_name} v{result.version} en staging')
                   print(f'   (Accuracy {accuracy:.2%} < 75%, seuil non atteint)')
            except Exception as e:
