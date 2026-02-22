@@ -12,12 +12,6 @@ __pycache__/
 .coverage
 htmlcov/
 
-# Données (trop volumineuses pour Git)
-data/
-*.csv
-*.xlsx
-*.parquet
-
 # Modèles (trop volumineux)
 models/*.pkl
 models/*.ubj
