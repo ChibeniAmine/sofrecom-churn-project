@@ -177,22 +177,22 @@ jobs:
           max_results=1
           )
           if runs:
-          best_run = runs[0]
-          model_uri = f'runs:/{best_run.info.run_id}/model'
-          # Enregistrer le modèle dans le Model Registry
-          model_name = 'telco-churn-predictor'
-          result = mlflow.register_model(model_uri, model_name)
+          	best_run = runs[0]
+          	model_uri = f'runs:/{best_run.info.run_id}/model'
+          	# Enregistrer le modèle dans le Model Registry
+          	model_name = 'telco-churn-predictor'
+          	result = mlflow.register_model(model_uri, model_name)
           
-          # Passer en production si bonne performance
-          if best_run.data.metrics['accuracy'] > 0.75:
-          client.transition_model_version_stage(
-            name=model_name,
-            version=result.version,
-            stage='Production'
-            )
-           print(f'✅ Modèle {model_name} v{result.version} en production')
+          	# Passer en production si bonne performance
+          	if best_run.data.metrics['accuracy'] > 0.75:
+          		client.transition_model_version_stage(
+            		name=model_name,
+            		version=result.version,
+            		stage='Production'
+            		)
+           	print(f'✅ Modèle {model_name} v{result.version} en production')
           else:
-           print(f'⚠️ Modèle {model_name} v{result.version} en staging')
+          	print(f'⚠️ Modèle {model_name} v{result.version} en staging')
           "
 
   # ÉTAPE 6: DÉPLOIEMENT (STAGING puis PROD)
