@@ -182,6 +182,7 @@ jobs:
           	# Enregistrer le modèle dans le Model Registry
           	model_name = 'telco-churn-predictor'
           	result = mlflow.register_model(model_uri, model_name)
+          	print(f'📦 Modèle enregistré: {model_name} v{result.version}')
           
           	# Passer en production si bonne performance
           	if best_run.data.metrics['accuracy'] > 0.75:
@@ -191,9 +192,11 @@ jobs:
             	    stage='Production'
             	    )
                     print(f'✅ Modèle {model_name} v{result.version} en production')
+                else:
+                    print(f'⚠️ Modèle {model_name} v{result.version} en staging')
           else:
-              print(f'⚠️ Modèle {model_name} v{result.version} en staging')
-          "
+              print('⚠️ Aucun run trouvé dans MLflow')
+              " 
 
   # ÉTAPE 6: DÉPLOIEMENT (STAGING puis PROD)
   deploy-staging:
